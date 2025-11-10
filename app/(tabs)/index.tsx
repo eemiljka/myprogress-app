@@ -1,10 +1,8 @@
-import { Image, Platform, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
-import { HelloWave } from "@/components/hello-wave";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
@@ -18,64 +16,61 @@ export default function HomeScreen() {
           />
         }
       >
-        <ThemedView style={styles.titleContainer}>
-          <ThemedText type="title">Welcome!</ThemedText>
-          <HelloWave />
-        </ThemedView>
-        <ThemedView style={styles.stepContainer}>
-          <ThemedText type="subtitle">My sets</ThemedText>
-          <ThemedText>
-            Edit{" "}
-            <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-            to see changes. Press{" "}
-            <ThemedText type="defaultSemiBold">
-              {Platform.select({
-                ios: "cmd + d",
-                android: "cmd + m",
-                web: "F12",
-              })}
-            </ThemedText>{" "}
-            to open developer tools.
-          </ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.stepContainer}>
-          <Link href="/modal">
-            <Link.Trigger>
-              <ThemedText type="subtitle">My weight</ThemedText>
-            </Link.Trigger>
-            <Link.Preview />
-            <Link.Menu>
-              <Link.MenuAction
-                title="Action"
-                icon="cube"
-                onPress={() => alert("Action pressed")}
-              />
-              <Link.MenuAction
-                title="Share"
-                icon="square.and.arrow.up"
-                onPress={() => alert("Share pressed")}
-              />
-              <Link.Menu title="More" icon="ellipsis">
-                <Link.MenuAction
-                  title="Delete"
-                  icon="trash"
-                  destructive
-                  onPress={() => alert("Delete pressed")}
-                />
-              </Link.Menu>
-            </Link.Menu>
-          </Link>
-
-          <ThemedText>
-            {`Tap the Explore tab to learn more about what's included in this starter app.`}
-          </ThemedText>
-        </ThemedView>
+        <TouchableOpacity onPress={}>
+          <ThemedView style={styles.card}>
+            <ThemedText type="subtitle" style={styles.cardTitle}>
+              My sets
+            </ThemedText>
+            <ThemedView style={styles.cardContentRow}>
+              <ThemedText style={styles.cardDescription}>
+                See your set progress here.
+              </ThemedText>
+              <Image
+                style={styles.cardImage}
+                source={require("@/assets/images/chart-placeholder.png")}
+              ></Image>
+            </ThemedView>
+          </ThemedView>
+        </TouchableOpacity>
       </ParallaxScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    // Shadow for iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 5,
+    shadowOpacity: 0.15,
+    // Elevation for android
+    elevation: 4,
+  },
+  cardTitle: {
+    marginBottom: 12,
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  cardContentRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  cardDescription: {
+    flex: 1,
+    marginRight: 12,
+    fontSize: 16,
+  },
+  cardImage: {
+    width: 80,
+    height: 80,
+    resizeMode: "contain",
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -93,6 +88,9 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   stepContainer: {
+    flex: 2,
+    justifyContent: "center",
+    alignItems: "center",
     gap: 8,
     marginBottom: 16,
     backgroundColor: "#fff",
@@ -112,5 +110,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: "absolute",
+  },
+  stretch: {
+    width: 100,
+    height: 100,
   },
 });
