@@ -1,8 +1,9 @@
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
@@ -16,8 +17,8 @@ export default function HomeScreen() {
           />
         }
       >
-        <TouchableOpacity onPress={}>
-          <ThemedView style={styles.card}>
+        <ThemedView style={styles.card}>
+          <Link href={"/mysets"}>
             <ThemedText type="subtitle" style={styles.cardTitle}>
               My sets
             </ThemedText>
@@ -30,8 +31,8 @@ export default function HomeScreen() {
                 source={require("@/assets/images/chart-placeholder.png")}
               ></Image>
             </ThemedView>
-          </ThemedView>
-        </TouchableOpacity>
+          </Link>
+        </ThemedView>
       </ParallaxScrollView>
     </SafeAreaView>
   );
@@ -110,9 +111,5 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: "absolute",
-  },
-  stretch: {
-    width: 100,
-    height: 100,
   },
 });
