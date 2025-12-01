@@ -44,3 +44,6 @@ app-example
 
 # assets
 /assets/images/chart-placeholder.png
+
+#config
+config.js
