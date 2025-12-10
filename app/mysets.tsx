@@ -1,8 +1,9 @@
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet } from "react-native";
+import { FlatList, Image, Pressable, StyleSheet } from "react-native";
 import { API_URL } from "../config";
 
 interface Set {
@@ -13,6 +14,7 @@ interface Set {
 
 const MySets = () => {
   const [sets, setSets] = useState<Set[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     fetch(`${API_URL}/mysets`)
@@ -24,24 +26,27 @@ const MySets = () => {
     <ParallaxScrollView
       headerImage={<ThemedText style={styles.normTitle}>Sets</ThemedText>}
     >
-      <ThemedView style={styles.card}>
-        <FlatList
-          data={sets}
-          keyExtractor={(item, index) =>
-            item?.id ? item.id.toString() : index.toString()
-          }
-          renderItem={({ item }) => (
-            <ThemedText style={styles.cardTitle}>
-              {item.name} {item.rep_range}
-              {" reps"}
-            </ThemedText>
-          )}
-        />
-        <Image
-          style={styles.image}
-          source={require("@/assets/images/chart-placeholder.png")}
-        ></Image>
-      </ThemedView>
+      <FlatList
+        data={sets}
+        keyExtractor={(item, index) =>
+          item?.id ? item.id.toString() : index.toString()
+        }
+        renderItem={({ item }) => (
+          <Pressable onPress={() => router.push(`/set/${item.id}`)}>
+            <ThemedView style={styles.card}>
+              <ThemedText style={styles.cardTitle}>
+                {item.name} {item.rep_range}
+                {" reps"}
+              </ThemedText>
+              <Image
+                style={styles.image}
+                source={require("@/assets/images/chart-placeholder.png")}
+              />
+            </ThemedView>
+          </Pressable>
+        )}
+        scrollEnabled={false}
+      />
     </ParallaxScrollView>
   );
 };
